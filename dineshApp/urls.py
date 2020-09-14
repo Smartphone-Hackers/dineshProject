@@ -1,0 +1,37 @@
+from django.urls import path
+from dineshApp import views
+from django.contrib.auth.decorators import login_required
+
+urlpatterns = [
+    path('', login_required(views.HouseRent.as_view(), login_url="/dinesh/login")),
+    path('HouseRentEdit/<int:pk>', views.HouseRentEdit.as_view()),
+    path('HouseRentDelete/<int:pk>', views.HouseRentDelete.as_view()),
+    path('EB-Bill', login_required(views.EBBill.as_view(), login_url="/dinesh/login")),
+    path('EB-Bill-Edit/<int:pk>', views.EBBillEdit.as_view()),
+    path('EB-Bill-Delete/<int:pk>', views.EBBillDelete.as_view()),
+    path('public-initial', views.PublicAccountInitial.as_view()),
+    path('AccountDetails', login_required(views.AccountDetails.as_view(), login_url="/dinesh/login")),
+    path('AccountDetailsDelete/<int:pk>', views.AccountDetailsDelete.as_view()),
+    path('CraneOperatorDetails', views.CraneOperatorDetails.as_view()),
+    path('CraneOperatorDetailsEdit/<int:pk>', views.CraneOperatorDetailsEdit.as_view()),
+    path('CraneOperatorDetailsDelete/<int:pk>', views.CraneOperatorDetailsDelete.as_view()),
+    path('CraneCompanyBill', login_required(views.CraneCompanyBill.as_view(), login_url="/dinesh/login")),
+    path('CraneMoreDetails/<int:pk>', views.CraneMoreDetails.as_view()),
+    path('CraneBillDelete/<int:pk>', views.CraneBillDelete.as_view()),
+    path('IGPCalculation', login_required(views.IGPCalculation.as_view(), login_url="/dinesh/login")),
+    path('IGPCalculationEdit/<int:pk>', views.IGPCalculationEdit.as_view()),
+    path('IGPCalculationDelete/<int:pk>', views.IGPCalculationDelete.as_view()),
+    path('GeneratePDF', views.GeneratePDF.as_view()),
+    path('login', views.AdminLogin.as_view()),
+    path('logout', views.AdminLogout.as_view()),
+    path('notepad', views.NotePad.as_view()),
+    path('notepad-delete/<int:pk>', views.NotePadDelete.as_view()),
+    path('PrivateAccountDetails', views.PrivateAccountDetails.as_view()),
+    path('PrivateAccountDetailsDelete/<int:pk>', views.PrivateAccountDetailsDelete.as_view()),
+    path('CommonBillCalculation', views.CommonBillCalculation.as_view()),
+    path('CommonBillCalculationEdit/<int:pk>', views.CommonBillCalculationEdit.as_view()),
+    path('CommonBillCalculationDelete/<int:pk>', views.CommonBillCalculationDelete.as_view()),
+    path('CommonBillPDF', views.CommonBillPDF.as_view()),
+    path('CompanyMaster', views.CompanyMaster.as_view()),
+    path('CompanyMasterDelete/<int:pk>', views.CompanyMasterDelete.as_view()),
+]

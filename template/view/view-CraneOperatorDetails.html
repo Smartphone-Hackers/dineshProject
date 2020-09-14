@@ -1,0 +1,141 @@
+{% extends 'view-base.html' %}
+{% load static %}
+{% block title %}
+  Crane Operator Details
+{% endblock %}
+{% block content %}
+<div>Crane Operator Details
+  <div class="page-title-subheading">Crane Operator Details.</div>
+</div>
+<div class="page-title-actions">
+	</div>
+</div>
+</div>
+<ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+</ul>
+<div class="tab-content">
+	<div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+		<div class="main-card mb-3 card">
+			<div class="card-body">
+				<h5 class="card-title">Crane Operator Details</h5>
+        {% if messages %}
+          {% for message in messages %}
+			<div class="alert alert-info">
+				{{ message }}
+			</div>
+          {% endfor %}
+        {% endif %}
+				<form method="post" enctype="multipart/form-data">
+					<div class="form-row">
+            			{% csrf_token %}
+            <div class="col-md-3">
+              <div class="position-relative form-group">
+                <label>Name</label>
+                <select name="name" class="form-control" required>
+                  <option>Please Select Employee</option>
+                  {% for employee in employees %}
+                      {% if crane_operator_data.name in employee %}
+                        <option value="{{employee}}" selected>{{employee}}</option>
+                      {% else %}
+                        <option value="{{employee}}">{{employee}}</option>
+                      {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+							<div class="position-relative form-group">
+								<label>Leave/Advance Amt/Salary</label>
+								<select name="leave_advance" class="form-control" required>
+                  <option>Please Select L/A/S</option>
+                  {% for la in leave_advance %}
+                      {% if la == crane_operator_data.leave_advance %}
+                        <option value="{{la}}" selected>{{la}}</option>
+                      {% else %}
+                        <option value="{{la}}">{{la}}</option>
+                      {% endif %}
+                  {% endfor %}
+                </select>
+							</div>
+						</div>
+            <div class="col-md-3">
+							<div class="position-relative form-group">
+								<label for="examplePassword11" class="">Date</label>
+								<input type="date" required class="form-control" value="{{crane_operator_data_date}}" name="date">
+							</div>
+            </div>
+            <div class="col-md-3">
+							<div class="position-relative form-group">
+								<label for="examplePassword11" class="">Amount</label>
+								<input type="number" required class="form-control" name="amount" value="{{crane_operator_data.amount}}" placeholder="Enter Amount">
+							</div>
+            </div>
+          </div>
+					<button class="mt-2 btn btn-primary">Submit</button>
+        </form>
+                <br>
+                <form>
+                  <div class="form-row">
+                    <div class="col-md-3">
+                      <div class="position-relative form-group">
+                        <label>Employees</label>
+                        <select name="emp-name" class="form-control" required>
+                          <option value="">Please Select Year</option>
+                          {% for emp in employee_names %}
+                            <option value="{{emp}}">{{emp}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="position-relative form-group">
+                        <label>Date</label>
+                        <input type="date" class="form-control" name="emp-date" required>
+                      </div>
+                    </div>
+                    <div class="col-md-3"> <br>
+                      <button class="mt-2 btn btn-primary">Search</button>
+                    </div>
+                  </div>
+                  
+                </form>
+                {% if emp_name is not None %}
+                  <h5>{{ emp_name }} - {{ remaining_salary.balance }} </h5>
+                {% endif %}
+                <div class="table-responsive">
+                    <table class="mb-0 table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Leave/Advance-Amt/Salary</th>
+                            <th>Reduce-Amount</th>
+                            <th>Balance-Amount</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for crane in crane_operators %}
+                                <tr>
+                                    <td>{{ crane.date }}</td>
+                                    <td>{{ crane.name }}</td>
+                                    <td>{{ crane.leave_advance }}</td>
+                                    <td>&#8377; {{ crane.amount }}</td>
+                                    <td>&#8377; {{ crane.balance }}</td>
+                                    <td>
+                                      <a href="/ViewCraneOperatorDetailsEdit/{{crane.id}}" class="mb-2 mr-2 border-0 btn-transition btn btn-outline-success">Edit</a>
+                                    </td>
+                                    <td>
+                                      <a href="/ViewCraneOperatorDetailsDelete/{{crane.id}}" class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+			</div>
+		</div>
+</div>
+</div>
+{% endblock %}

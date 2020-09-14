@@ -1,0 +1,84 @@
+{% load static %}
+<!doctype html>
+<html>
+    <head>
+        <title>PDF</title>
+        <link href="{% static 'main.css' %}" rel="stylesheet">
+        <link href="{% static 'sign_pad.css' %}" rel="stylesheet"> 
+        <style>
+            .heading{
+                text-align: center;
+                color: royalblue;
+            }
+
+            .pub-bill{
+                text-align: center;
+            }
+
+            td{
+                font-size: 20px;
+            }
+
+            .room-address{
+                text-align: left;
+                color: royalblue;
+            }
+
+            .right-side{
+                text-align: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="heading"><b>Devi Crane</b></h1>
+            <br> <br> <br>
+            <address class="room-address">
+                No.25, Annai Indira Street, Sholinganallur, Chennai-600 119
+                <address class="right-side">
+                    Phone: 9444103548
+                </address>
+                <address class="right-side">
+                    Date : {{ generate_date }}
+                </address>
+            </address>
+
+            <p class="room-address" style="margin-top:-55px">
+                Bill No : {{ bill_no }}
+            </p>
+            <address class="room-address">
+                To: {{ company_name }}
+            </address>
+            <br>
+            <div class="pub-bill">
+                <table class="mb-0 table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Hours</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for comp in company %}
+                            <tr>
+                                <td>{{comp.bill_date}}</td>
+                                <td>{{comp.tot_hours}}</td>
+                                <td>{{comp.amount}}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td>
+                                <b>Total</b> 
+                            </td>
+                            <td>{{total}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script src="{% static 'scripts/signature2.js' %}"></script>
+        <script src="{% static 'scripts/signature1.js' %}"></script>
+    </body>
+</html>

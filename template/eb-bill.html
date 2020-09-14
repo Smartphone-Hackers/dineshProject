@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  EB Bill
+{% endblock %}
+{% block content %}
+<div>EB Bill
+  <div class="page-title-subheading">EB Bill.</div>
+</div>
+<div class="page-title-actions">
+	</div>
+</div>
+</div>
+<ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+</ul>
+<div class="tab-content">
+	<div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+		<div class="main-card mb-3 card">
+			<div class="card-body">
+				<h5 class="card-title">EB Bill</h5>
+        {% if messages %}
+          {% for message in messages %}
+			<div class="alert alert-info">
+				{{ message }}
+			</div>
+          {% endfor %}
+        {% endif %}
+				<form method="post" enctype="multipart/form-data">
+					<div class="form-row">
+            			{% csrf_token %}
+						
+            <div class="col-md-3">
+							<div class="position-relative form-group">
+								<label for="examplePassword11" class="">Date</label>
+								<input type="date" required class="form-control" value="{{eb_bill_date}}" name="date">
+							</div>
+            </div>
+            <div class="col-md-3">
+							<div class="position-relative form-group">
+								<label>House</label>
+								<select name="house" class="form-control" required>
+                  <option>Please Select House</option>
+                  {% for house in houses %}
+                      {% if house == eb_bill.house %}
+                        <option value="{{house}}" selected>{{house}}</option>
+                      {% else %}
+                        <option value="{{house}}">{{house}}</option>
+                      {% endif %}
+                  {% endfor %}
+                </select>
+							</div>
+						</div>
+            <div class="col-md-3">
+                <div class="position-relative form-group">
+                    <label>EB Number</label>
+                    <select name="eb_num" class="form-control" required>
+                    <option>Please Select EB</option>
+                        {% for eb in eb_num %}
+                          {% if eb == eb_bill.eb_no %}
+                            <option value="{{eb}}" selected>{{eb}}</option>
+                          {% else %}
+                            <option value="{{eb}}">{{eb}}</option>
+                          {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="position-relative form-group">
+                    <label for="examplePassword11" class="">Amount</label>
+                    <input type="number" required class="form-control" name="amount" value="{{eb_bill.amount}}" placeholder="Amount">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="position-relative form-group">
+                    <label>Paid (Y/N)</label>
+                    <select name="yes_no" class="form-control" required>
+                    <option>Please Select [Y/N]</option>
+                        {% for yn in yes_no %}
+                          {% if yn == eb_bill.yes_no %}
+                            <option value="{{yn}}" selected>{{yn}}</option>
+                          {% else %}
+                            <option value="{{yn}}">{{yn}}</option>
+                          {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+		    </div>
+        </div>
+					<button class="mt-2 btn btn-primary">Submit</button>
+              </form>
+                <br>
+                <form>
+                  <div class="form-row">
+                    <div class="col-md-3">
+                      <div class="position-relative form-group">
+                        <label>Year - {{current_year}}</label>
+                        <select name="year" class="form-control" required>
+                          <option>Please Select Year</option>
+                          {% for year in eb_bill_year %}
+                            <option value="{{year}}">{{year}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3"> <br>
+                      <button class="mt-2 btn btn-primary">Search</button>
+                    </div>
+                  </div>                 
+              </form>
+
+                <h5>This Year - House Rent </h5>
+                <div class="table-responsive">
+                    <table class="mb-0 table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>House</th>
+                            <th>EB Number</th>
+                            <th>Amount</th>
+                            <th>Paid [Y/N]</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for eb_bill in eb_bills %}
+                                <tr>
+                                    <td>{{ eb_bill.date }}</td>
+                                    <td>{{ eb_bill.house }}</td>
+                                    <td>{{ eb_bill.eb_no }}</td>
+                                    <td>&#8377; {{ eb_bill.amount }}</td>
+                                    <td>{{ eb_bill.yes_no }}</td>
+                                    <td>
+                                      <a href="/dinesh/EB-Bill-Edit/{{eb_bill.id}}" class="mb-2 mr-2 border-0 btn-transition btn btn-outline-success">Edit</a>
+                                    </td>
+                                    <td>
+                                      <a href="/dinesh/EB-Bill-Delete/{{eb_bill.id}}" class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+			</div>
+		</div>
+</div>
+</div>
+{% endblock %}

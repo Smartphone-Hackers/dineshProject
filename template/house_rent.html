@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  House Rent
+{% endblock %}
+{% block content %}
+<div>House Rent
+  <div class="page-title-subheading">House Rent.</div>
+</div>
+<div class="page-title-actions">
+	</div>
+</div>
+</div>
+<ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+</ul>
+<div class="tab-content">
+	<div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+		<div class="main-card mb-3 card">
+			<div class="card-body">
+				<h5 class="card-title">House Rent</h5>
+        {% if messages %}
+          {% for message in messages %}
+			<div class="alert alert-info">
+				{{ message }}
+			</div>
+          {% endfor %}
+        {% endif %}
+				<form method="post" enctype="multipart/form-data">
+					<div class="form-row">
+            			{% csrf_token %}
+						
+            <div class="col-md-3">
+							<div class="position-relative form-group">
+								<label for="examplePassword11" class="">Date</label>
+								<input type="date" required class="form-control" value="{{house_rent_date}}" name="date">
+							</div>
+            </div>
+            <div class="col-md-3">
+							<div class="position-relative form-group">
+								<label>House</label>
+								<select name="house" class="form-control" required>
+                  <option>Please Select House</option>
+                  {% for house in houses %}
+                      {% if house_edit.house == house %}
+                        <option value="{{house}}" selected>{{house}}</option>
+                      {% else %}
+                        <option value="{{house}}">{{house}}</option>
+                      {% endif %}
+                  {% endfor %}
+                </select>
+							</div>
+						</div>
+            <div class="col-md-3">
+							<div class="position-relative form-group">
+								<label for="examplePassword11" class="">Rent Recieved</label>
+								<input type="number" required class="form-control" name="rent" value="{{house_edit.rent_recieved}}" placeholder="Rent Recieved">
+							</div>
+            </div>
+            <div class="col-md-3">
+							<div class="position-relative form-group">
+								<label>Account</label>
+								<select name="account" class="form-control" required>
+                  <option>Please Select Account</option>
+                    {% for account in accounts %}
+                      {% if account == house_edit.account %}
+                        <option value="{{account}}" selected>{{account}}</option>
+                      {% else %}
+                        <option value="{{account}}">{{account}}</option>
+                      {% endif %}
+                    {% endfor %}
+                </select>
+							</div>
+						</div>
+          </div>
+					<button class="mt-2 btn btn-primary">Submit</button>
+        </form>
+                <br>
+                <form>
+                  <div class="form-row">
+                    <div class="col-md-3">
+                      <div class="position-relative form-group">
+                        <label>Year - {{current_year}}</label>
+                        <select name="year" class="form-control" required>
+                          <option>Please Select Year</option>
+                          {% for year in house_rent_year %}
+                            <option value="{{year}}">{{year}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3"> <br>
+                      <button class="mt-2 btn btn-primary">Search</button>
+                    </div>
+                  </div>
+                  
+                </form>
+                <h5>This Year - House Rent </h5>
+                <div class="table-responsive">
+                    <table class="mb-0 table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>House Rent</th>
+                            <th>Rent Recieved</th>
+                            <th>Account</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for house_rent in house_rents %}
+                                <tr>
+                                    <td>{{ house_rent.date }}</td>
+                                    <td>{{ house_rent.house }}</td>
+                                    <td>&#8377; {{ house_rent.rent_recieved }}</td>
+                                    <td>{{ house_rent.account }}</td>
+                                    <td>
+                                      <a href="/dinesh/HouseRentEdit/{{house_rent.id}}" class="mb-2 mr-2 border-0 btn-transition btn btn-outline-success">Edit</a>
+                                    </td>
+                                    <td>
+                                      <a href="/dinesh/HouseRentDelete/{{house_rent.id}}" class="mb-2 mr-2 border-0 btn-transition btn btn-outline-danger">delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+			</div>
+		</div>
+</div>
+</div>
+{% endblock %}
